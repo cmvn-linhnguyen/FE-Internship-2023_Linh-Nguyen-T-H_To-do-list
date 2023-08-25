@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import deleteIcon from '../../../assets/delete.svg';
 import { STATUS, TaskProps } from '../interface';
 
@@ -10,23 +10,23 @@ interface Props {
 
 const Task = (props: Props) => {
   const [isEditable, setIsEditable] = useState(false);
-  const [editedContent, setEditedContent] = useState(props.task.content);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleLabelDoubleClick = () => {
     setIsEditable(true);
   };
 
-  const handleContentBlur = () => {
+  const handleChangeContent = () => {
     setIsEditable(false);
-    props.handleUpdate({ ...props.task, content: editedContent });
+    if (inputRef.current?.value)
+      props.handleUpdate({ ...props.task, content: inputRef.current?.value });
   };
 
   const handleInputKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === 'Enter') {
-      setIsEditable(false);
-      props.handleUpdate({ ...props.task, content: editedContent });
+      handleChangeContent();
     }
   };
 
@@ -53,10 +53,10 @@ const Task = (props: Props) => {
             id="task-content"
             className="task-content"
             autoFocus={true}
-            onBlur={handleContentBlur}
+            onBlur={handleChangeContent}
             onKeyDown={handleInputKeyPress}
-            value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
+            ref={inputRef}
+            defaultValue={props.task.content}
           />
         ) : (
           <span

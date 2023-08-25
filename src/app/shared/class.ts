@@ -15,6 +15,10 @@ export class TaskList {
     return this.tasks.filter((task) => task.status === filterStatus);
   }
 
+  getQuantity = () => {
+    return this.tasks.length;
+  };
+
   addTask = (task: TaskProps) => {
     this.tasks.push(task);
     this.updateData();
