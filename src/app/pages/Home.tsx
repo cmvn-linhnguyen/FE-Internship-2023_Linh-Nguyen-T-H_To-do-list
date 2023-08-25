@@ -52,6 +52,7 @@ const Home = () => {
   const handleInputKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
+    event.preventDefault();
     if (event.key === 'Enter') {
       handleAdd();
     }
@@ -68,7 +69,7 @@ const Home = () => {
             type="text"
             id="task"
             placeholder="Add new ..."
-            onKeyDown={handleInputKeyPress}
+            onKeyUp={handleInputKeyPress}
           />
           <button onClick={handleAdd} className="btn">
             Add
