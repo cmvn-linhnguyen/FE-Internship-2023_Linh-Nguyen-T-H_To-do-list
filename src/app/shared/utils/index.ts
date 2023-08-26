@@ -1,9 +1,12 @@
-import { TaskProps } from '../interface';
+import { TaskProps } from '../task-interface';
 
-export const getDataFromLocalStorage = (): TaskProps[] => {
-  return JSON.parse(localStorage.getItem('to-do-list') || '[]');
+export const getDataFromLocalStorage = (key: string): TaskProps[] => {
+  return JSON.parse(localStorage.getItem(key) || '[]');
 };
 
-export const saveDataToLocalStorage = (data: TaskProps[]) => {
-  localStorage.setItem('to-do-list', JSON.stringify(data));
+export const saveDataToLocalStorage = (
+  key: string,
+  data: TaskProps[]
+): void => {
+  localStorage.setItem(key, JSON.stringify(data));
 };

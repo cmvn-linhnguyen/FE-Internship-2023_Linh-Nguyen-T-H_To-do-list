@@ -1,9 +1,7 @@
-export enum STATUS {
-  'Active' = 'active',
-  'Completed' = 'completed',
-}
+import { STATUS } from './constants';
 
 export interface TaskProps {
+  id: string;
   content: string;
   status: STATUS.Active | STATUS.Completed;
 }

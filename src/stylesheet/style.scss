@@ -80,6 +80,7 @@ input[type='checkbox'] {
   border-radius: 20px;
 
   background-color: map-get($colors, 'gray-bg');
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
 
   h1 {
     margin-bottom: 25px;

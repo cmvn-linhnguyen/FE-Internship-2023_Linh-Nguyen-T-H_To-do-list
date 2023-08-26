@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import deleteIcon from '../../../assets/delete.svg';
-import { STATUS, TaskProps } from '../interface';
+import { TaskProps } from '../task-interface';
+import { STATUS } from '../constants';
 
 interface Props {
   task: TaskProps;

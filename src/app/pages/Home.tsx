@@ -1,52 +1,59 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Task from '../shared/components/Task';
-import { STATUS, TaskProps } from '../shared/interface';
-import { getDataFromLocalStorage } from '../shared/utils';
+import { TaskProps } from '../shared/task-interface';
+import {
+  getDataFromLocalStorage,
+  saveDataToLocalStorage,
+} from '../shared/utils';
 import '../../stylesheet/style.scss';
-import { TaskList } from '../shared/class';
+import { v4 as renderId } from 'uuid';
+import { STATUS } from '../shared/constants';
+import { TaskService } from '../shared/services/task-service';
 
 const Home = () => {
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [data, setData] = useState<TaskList>(
-    new TaskList(getDataFromLocalStorage())
+  const [data, setData] = useState<TaskProps[]>(
+    getDataFromLocalStorage('to-do-list')
   );
+  const taskService = new TaskService();
+
+  useEffect(() => {
+    saveDataToLocalStorage('to-do-list', data);
+  }, [data]);
 
   const handleAdd = () => {
     const inputValue = inputRef.current?.value;
 
     if (inputValue) {
       const newTask: TaskProps = {
+        id: renderId(),
         content: inputValue,
         status: STATUS.Active,
       };
 
-      data.addTask(newTask);
+      setData(taskService.addTask(data, newTask));
+
       inputRef.current.value = '';
     }
-
-    setData(new TaskList(getDataFromLocalStorage()));
   };
+
+  const filteredData: TaskProps[] = taskService.getTasks(data, filterStatus);
 
   const handleFilterChange = (status: string | null) => {
     setFilterStatus(status);
   };
 
-  const filteredData: TaskProps[] = data.getTasks(filterStatus);
-
-  const handleDelete = (index: number) => {
-    data.deleteTask(index);
-    setData(new TaskList(getDataFromLocalStorage()));
+  const handleDelete = (id: string) => {
+    setData(taskService.deleteTask(data, id));
   };
 
-  const handleUpdate = (index: number, updatedTask: TaskProps) => {
-    data.updateTask(index, updatedTask);
-    setData(new TaskList(getDataFromLocalStorage()));
+  const handleUpdate = (id: string, updatedTask: TaskProps) => {
+    setData(taskService.updateTask(data, id, updatedTask));
   };
 
   const handleClearCompleted = () => {
-    data.clearCompletedTasks();
-    setData(new TaskList(getDataFromLocalStorage()));
+    setData(taskService.clearCompletedTasks(data));
   };
 
   const handleInputKeyPress = (
@@ -76,7 +83,7 @@ const Home = () => {
           </button>
         </div>
         <div className="line"></div>
-        {data.getQuantity() ? (
+        {data.length ? (
           <>
             <div className="filter-wrap">
               <ul className="filter-list d-flex">
@@ -113,13 +120,13 @@ const Home = () => {
               </ul>
             </div>
             <ul className="task-list">
-              {filteredData.map((task, index) => (
-                <li key={index} className="task-item">
+              {filteredData.map((task) => (
+                <li key={task.id} className="task-item">
                   <Task
                     task={task}
-                    handleDelete={() => handleDelete(index)}
+                    handleDelete={() => handleDelete(task.id)}
                     handleUpdate={(updatedTask: TaskProps) =>
-                      handleUpdate(index, updatedTask)
+                      handleUpdate(task.id, updatedTask)
                     }
                   />
                 </li>
@@ -127,7 +134,7 @@ const Home = () => {
             </ul>
             <div className="quantity-wrap d-flex">
               <p className="quantity">{filteredData.length} Tasks</p>
-              {data.getTasks(STATUS.Completed).length ? (
+              {taskService.getTasks(data, STATUS.Completed).length ? (
                 <button
                   className="btn btn-outline"
                   onClick={handleClearCompleted}
