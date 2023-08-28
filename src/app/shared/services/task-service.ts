@@ -1,5 +1,5 @@
 import { STATUS } from '../constants';
-import { TaskProps } from '../task-interface';
+import { TaskProps } from '../models/task';
 
 export class TaskService {
   getTasks = (

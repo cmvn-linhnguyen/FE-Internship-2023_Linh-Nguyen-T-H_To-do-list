@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import deleteIcon from '../../../assets/delete.svg';
-import { TaskProps } from '../task-interface';
+import { TaskProps } from '../models/task';
 import { STATUS } from '../constants';
 
 interface Props {
@@ -13,7 +13,7 @@ const Task = (props: Props) => {
   const [isEditable, setIsEditable] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleLabelDoubleClick = () => {
+  const handleFocus = () => {
     setIsEditable(true);
   };
 
@@ -64,7 +64,7 @@ const Task = (props: Props) => {
             className={`task-label ${
               props.task.status === STATUS.Completed && 'completed'
             }`}
-            onDoubleClick={handleLabelDoubleClick}
+            onDoubleClick={handleFocus}
           >
             {props.task.content}
           </span>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Task from '../shared/components/Task';
-import { TaskProps } from '../shared/task-interface';
+import { TaskProps } from '../shared/models/task';
 import {
   getDataFromLocalStorage,
   saveDataToLocalStorage,
@@ -9,6 +9,7 @@ import '../../stylesheet/style.scss';
 import { v4 as renderId } from 'uuid';
 import { STATUS } from '../shared/constants';
 import { TaskService } from '../shared/services/task-service';
+import { filterLabel } from '../shared/data';
 
 const Home = () => {
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
@@ -87,36 +88,18 @@ const Home = () => {
           <>
             <div className="filter-wrap">
               <ul className="filter-list d-flex">
-                <li className="filter-item">
-                  <span
-                    className={`filter ${
-                      filterStatus === null && 'filter-active'
-                    }`}
-                    onClick={() => handleFilterChange(null)}
-                  >
-                    All
-                  </span>
-                </li>
-                <li className="filter-item">
-                  <span
-                    className={`filter ${
-                      filterStatus === STATUS.Active && 'filter-active'
-                    }`}
-                    onClick={() => handleFilterChange(STATUS.Active)}
-                  >
-                    Active
-                  </span>
-                </li>
-                <li className="filter-item">
-                  <span
-                    className={`filter ${
-                      filterStatus === STATUS.Completed && 'filter-active'
-                    }`}
-                    onClick={() => handleFilterChange(STATUS.Completed)}
-                  >
-                    Completed
-                  </span>
-                </li>
+                {filterLabel.map((item) => (
+                  <li className="filter-item">
+                    <span
+                      className={`filter ${
+                        filterStatus === item.status && 'filter-active'
+                      }`}
+                      onClick={() => handleFilterChange(item.status)}
+                    >
+                      {item.label}
+                    </span>
+                  </li>
+                ))}
               </ul>
             </div>
             <ul className="task-list">

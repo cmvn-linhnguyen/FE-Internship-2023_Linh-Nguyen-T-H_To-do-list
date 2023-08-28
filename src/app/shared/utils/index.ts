@@ -1,4 +1,4 @@
-import { TaskProps } from '../task-interface';
+import { TaskProps } from '../models/task';
 
 export const getDataFromLocalStorage = (key: string): TaskProps[] => {
   return JSON.parse(localStorage.getItem(key) || '[]');
