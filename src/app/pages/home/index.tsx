@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import Task from './Task';
+import Task from './components/Task';
 import { TaskProps } from '../../shared/models/task';
 import {
   getDataFromLocalStorage,
@@ -7,7 +7,7 @@ import {
 } from '../../shared/utils';
 import '../../../stylesheet/style.scss';
 import { v4 as renderId } from 'uuid';
-import { STATUS } from '../../shared/constants';
+import { LOCAL_STORAGE_KEY, STATUS } from '../../shared/constants';
 import { TaskService } from '../../shared/services/task-service';
 import { filterLabel } from '../../shared/data';
 
@@ -15,12 +15,12 @@ const Home = () => {
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const [data, setData] = useState<TaskProps[]>(
-    getDataFromLocalStorage('to-do-list')
+    getDataFromLocalStorage(LOCAL_STORAGE_KEY.TodoList)
   );
   const taskService = new TaskService();
 
   useEffect(() => {
-    saveDataToLocalStorage('to-do-list', data);
+    saveDataToLocalStorage(LOCAL_STORAGE_KEY.TodoList, data);
   }, [data]);
 
   const handleAdd = () => {
