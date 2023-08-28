@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
-import Task from '../shared/components/Task';
-import { TaskProps } from '../shared/models/task';
+import Task from './Task';
+import { TaskProps } from '../../shared/models/task';
 import {
   getDataFromLocalStorage,
   saveDataToLocalStorage,
-} from '../shared/utils';
-import '../../stylesheet/style.scss';
+} from '../../shared/utils';
+import '../../../stylesheet/style.scss';
 import { v4 as renderId } from 'uuid';
-import { STATUS } from '../shared/constants';
-import { TaskService } from '../shared/services/task-service';
-import { filterLabel } from '../shared/data';
+import { STATUS } from '../../shared/constants';
+import { TaskService } from '../../shared/services/task-service';
+import { filterLabel } from '../../shared/data';
 
 const Home = () => {
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
