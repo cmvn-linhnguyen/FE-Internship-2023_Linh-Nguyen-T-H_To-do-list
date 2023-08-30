@@ -1,7 +1,7 @@
 import { STATUS } from '../constants';
 
 export interface TaskProps {
-  id: string;
+  id: number;
   content: string;
   status: STATUS;
 }

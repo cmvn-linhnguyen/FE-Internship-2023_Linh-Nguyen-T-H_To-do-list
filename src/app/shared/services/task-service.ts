@@ -14,25 +14,21 @@ export class TaskService {
     return [...tasks, task];
   };
 
-  deleteTask = (tasks: TaskProps[], id: string): TaskProps[] => {
+  deleteTask = (tasks: TaskProps[], id: number): TaskProps[] => {
     return tasks.filter((task) => task.id !== id);
   };
 
   updateTask = (
     tasks: TaskProps[],
-    id: string,
+    id: number,
     updatedTask: TaskProps
   ): TaskProps[] => {
-    const updatedTasks = [...tasks];
-
-    for (let i = 0; i < updatedTasks.length; i++) {
-      if (updatedTasks[i].id === id) {
-        updatedTasks[i] = { ...updatedTasks[i], ...updatedTask };
-        break;
+    return tasks.map((task) => {
+      if (task.id === id) {
+        return updatedTask;
       }
-    }
-
-    return updatedTasks;
+      return task;
+    });
   };
 
   clearCompletedTasks = (tasks: TaskProps[]): TaskProps[] => {

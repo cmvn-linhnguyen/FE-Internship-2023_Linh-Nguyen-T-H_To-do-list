@@ -6,7 +6,6 @@ import {
   saveDataToLocalStorage,
 } from '../../shared/utils';
 import '../../../stylesheet/style.scss';
-import { v4 as renderId } from 'uuid';
 import { LOCAL_STORAGE_KEY, STATUS } from '../../shared/constants';
 import { TaskService } from '../../shared/services/task-service';
 import { filterLabel } from '../../shared/data';
@@ -28,7 +27,7 @@ const Home = () => {
 
     if (inputValue) {
       const newTask: TaskProps = {
-        id: renderId(),
+        id: Date.now(),
         content: inputValue,
         status: STATUS.Active,
       };
@@ -39,17 +38,21 @@ const Home = () => {
     }
   };
 
-  const filteredData: TaskProps[] = taskService.getTasks(data, filterStatus);
+  const filteredData: TaskProps[] = taskService
+    .getTasks(data, filterStatus)
+    .sort((a, b) => {
+      return b.id - a.id;
+    });
 
   const handleFilterChange = (status: string | null) => {
     setFilterStatus(status);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = (id: number) => {
     setData(taskService.deleteTask(data, id));
   };
 
-  const handleUpdate = (id: string, updatedTask: TaskProps) => {
+  const handleUpdate = (id: number, updatedTask: TaskProps) => {
     setData(taskService.updateTask(data, id, updatedTask));
   };
 
@@ -88,8 +91,8 @@ const Home = () => {
           <>
             <div className="filter-wrap">
               <ul className="filter-list d-flex">
-                {filterLabel.map((item) => (
-                  <li className="filter-item">
+                {filterLabel.map((item, index) => (
+                  <li key={index} className="filter-item">
                     <span
                       className={`filter ${
                         filterStatus === item.status && 'filter-active'
