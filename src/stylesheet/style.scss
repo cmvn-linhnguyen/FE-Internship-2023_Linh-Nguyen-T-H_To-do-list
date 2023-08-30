@@ -133,6 +133,16 @@ input[type='checkbox'] {
     gap: 16px;
   }
 
+  &-wrap {
+    justify-content: space-between;
+    align-items: center;
+
+    .check-all-button {
+      background-color: transparent;
+      border: none;
+    }
+  }
+
   cursor: pointer;
 
   &-active {

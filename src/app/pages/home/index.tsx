@@ -1,7 +1,8 @@
-import { BoardFooter, BoardHeader, TaskList } from './components';
+import { useSelector } from 'react-redux';
+
+import { TodoFooter, TodoHeader, TaskList } from './components';
 
 import '../../../stylesheet/style.scss';
-import { useSelector } from 'react-redux';
 import { TaskState } from '../../shared/redux/reducer';
 
 const Home = () => {
@@ -10,12 +11,12 @@ const Home = () => {
   return (
     <div className="home">
       <div className="board-wrap">
-        <BoardHeader />
+        <TodoHeader />
         <div className="line"></div>
         {tasks.length ? (
           <>
             <TaskList />
-            <BoardFooter />
+            <TodoFooter />
           </>
         ) : null}
       </div>

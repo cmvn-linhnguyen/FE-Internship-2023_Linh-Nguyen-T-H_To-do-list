@@ -1,4 +1,4 @@
-import { STATUS } from '../constants';
+import { Status } from '../constants';
 import { TaskProps } from '../models/task';
 
 export class TaskService {
@@ -32,6 +32,6 @@ export class TaskService {
   };
 
   clearCompletedTasks = (tasks: TaskProps[]): TaskProps[] => {
-    return tasks.filter((task) => task.status !== STATUS.Completed);
+    return tasks.filter((task) => task.status !== Status.COMPLETED);
   };
 }

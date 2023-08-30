@@ -1,5 +1,11 @@
 import { TaskProps } from '../models/task';
-import { ADD_TASK, CLEAR_COMPLETED, DELETE_TASK, UPDATE_TASK } from './type';
+import {
+  ADD_TASK,
+  CLEAR_COMPLETED,
+  SELECT_ALL,
+  DELETE_TASK,
+  UPDATE_TASK,
+} from './type';
 
 export const addTask = (newTask: TaskProps) => {
   return { type: ADD_TASK, payload: newTask };
@@ -15,4 +21,8 @@ export const updateTask = (updatedTask: TaskProps) => {
 
 export const clearCompleted = () => {
   return { type: CLEAR_COMPLETED };
+};
+
+export const selectAll = () => {
+  return { type: SELECT_ALL };
 };

@@ -2,10 +2,10 @@ import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { TaskProps } from '../../../shared/models/task';
-import { STATUS } from '../../../shared/constants';
+import { Status } from '../../../shared/constants';
 import { addTask } from '../../../shared/redux/action';
 
-export const BoardHeader = () => {
+export const TodoHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const dispatch = useDispatch();
 
@@ -15,7 +15,7 @@ export const BoardHeader = () => {
       const newTask: TaskProps = {
         id: Date.now(),
         content: inputValue,
-        status: STATUS.Active,
+        status: Status.ACTIVE,
       };
 
       dispatch(addTask(newTask));

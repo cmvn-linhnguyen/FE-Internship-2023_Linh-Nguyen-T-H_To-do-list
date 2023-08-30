@@ -1,16 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 
-import { STATUS } from '../../../shared/constants';
+import { Status } from '../../../shared/constants';
 import { TaskState } from '../../../shared/redux/reducer';
 import { TaskService } from '../../../shared/services/task-service';
 import { clearCompleted } from '../../../shared/redux/action';
 
-export const BoardFooter = () => {
+export const TodoFooter = () => {
   const tasks = useSelector((state: TaskState) => state.tasks);
   const dispatch = useDispatch();
 
   const taskService = new TaskService();
-  const tasksLeft = taskService.getTasks(tasks, STATUS.Active).length;
+  const tasksLeft = taskService.getTasks(tasks, Status.ACTIVE).length;
 
   const handleClearCompleted = () => {
     dispatch(clearCompleted());
@@ -21,7 +21,7 @@ export const BoardFooter = () => {
       <p className="quantity">
         {tasksLeft + ` Task${tasksLeft > 1 ? 's' : ''} Left`}
       </p>
-      {taskService.getTasks(tasks, STATUS.Completed).length ? (
+      {taskService.getTasks(tasks, Status.COMPLETED).length ? (
         <button className="btn btn-outline" onClick={handleClearCompleted}>
           Clear Completed
         </button>

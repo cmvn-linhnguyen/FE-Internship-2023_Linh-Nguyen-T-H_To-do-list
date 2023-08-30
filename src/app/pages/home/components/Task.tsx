@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import deleteIcon from '../../../../assets/delete.svg';
 import { TaskProps } from '../../../shared/models/task';
-import { STATUS } from '../../../shared/constants';
+import { Status } from '../../../shared/constants';
 import { deleteTask, updateTask } from '../../../shared/redux/action';
 
 export const Task = ({ task }: { task: TaskProps }) => {
@@ -34,7 +34,7 @@ export const Task = ({ task }: { task: TaskProps }) => {
       updateTask({
         ...task,
         status:
-          task.status === STATUS.Active ? STATUS.Completed : STATUS.Active,
+          task.status === Status.ACTIVE ? Status.COMPLETED : Status.ACTIVE,
       })
     );
   };
@@ -49,7 +49,7 @@ export const Task = ({ task }: { task: TaskProps }) => {
         <input
           className="task-checkbox"
           type="checkbox"
-          checked={task.status === STATUS.Completed}
+          checked={task.status === Status.COMPLETED}
           onChange={handleCheckboxChange}
         />
         {isEditable ? (
@@ -66,7 +66,7 @@ export const Task = ({ task }: { task: TaskProps }) => {
         ) : (
           <span
             className={`task-label ${
-              task.status === STATUS.Completed && 'completed'
+              task.status === Status.COMPLETED && 'completed'
             }`}
             onDoubleClick={handleFocus}
           >
