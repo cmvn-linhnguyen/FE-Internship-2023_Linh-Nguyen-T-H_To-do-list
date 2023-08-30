@@ -5,3 +5,8 @@ export interface TaskProps {
   content: string;
   status: STATUS;
 }
+
+export interface ComponentProps {
+  data: TaskProps[];
+  updateData: (newData: TaskProps[]) => void;
+}

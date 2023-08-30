@@ -9,7 +9,7 @@ interface Props {
   handleUpdate: (updatedTask: TaskProps) => void;
 }
 
-const Task = (props: Props) => {
+export const Task = (props: Props) => {
   const [isEditable, setIsEditable] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -76,5 +76,3 @@ const Task = (props: Props) => {
     </div>
   );
 };
-
-export default Task;
