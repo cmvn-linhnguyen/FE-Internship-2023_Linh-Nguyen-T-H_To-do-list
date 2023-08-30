@@ -1,13 +1,15 @@
 import { useRef } from 'react';
-import { TaskService } from '../../../shared/services/task-service';
-import { ComponentProps, TaskProps } from '../../../shared/models/task';
+import { useDispatch } from 'react-redux';
+
+import { TaskProps } from '../../../shared/models/task';
 import { STATUS } from '../../../shared/constants';
+import { addTask } from '../../../shared/redux/action';
 
-export const BoardHeader = ({ data, updateData }: ComponentProps) => {
-  const taskService = new TaskService();
+export const BoardHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
 
-  const handleAdd = () => {
+  const handleAddTask = () => {
     const inputValue = inputRef.current?.value;
     if (inputValue) {
       const newTask: TaskProps = {
@@ -16,7 +18,7 @@ export const BoardHeader = ({ data, updateData }: ComponentProps) => {
         status: STATUS.Active,
       };
 
-      updateData(taskService.addTask(data, newTask));
+      dispatch(addTask(newTask));
       inputRef.current.value = '';
     }
   };
@@ -26,7 +28,7 @@ export const BoardHeader = ({ data, updateData }: ComponentProps) => {
   ) => {
     event.preventDefault();
     if (event.key === 'Enter') {
-      handleAdd();
+      handleAddTask();
     }
   };
 
@@ -42,7 +44,7 @@ export const BoardHeader = ({ data, updateData }: ComponentProps) => {
           placeholder="Add new ..."
           onKeyUp={handleInputKeyPress}
         />
-        <button onClick={handleAdd} className="btn">
+        <button onClick={handleAddTask} className="btn">
           Add
         </button>
       </div>

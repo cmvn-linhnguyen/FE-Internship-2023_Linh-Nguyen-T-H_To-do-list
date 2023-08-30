@@ -1,37 +1,21 @@
-import { useEffect, useState } from 'react';
-
 import { BoardFooter, BoardHeader, TaskList } from './components';
 
-import { TaskProps } from '../../shared/models/task';
-import {
-  getDataFromLocalStorage,
-  saveDataToLocalStorage,
-} from '../../shared/utils';
 import '../../../stylesheet/style.scss';
-import { LOCAL_STORAGE_KEY } from '../../shared/constants';
+import { useSelector } from 'react-redux';
+import { TaskState } from '../../shared/redux/reducer';
 
 const Home = () => {
-  const [data, setData] = useState<TaskProps[]>(
-    getDataFromLocalStorage(LOCAL_STORAGE_KEY.TodoList)
-  );
-
-  useEffect(() => {
-    saveDataToLocalStorage(LOCAL_STORAGE_KEY.TodoList, data);
-  }, [data]);
-
-  const updateData = (newData: TaskProps[]): void => {
-    setData(newData);
-  };
+  const tasks = useSelector((state: TaskState) => state.tasks);
 
   return (
     <div className="home">
       <div className="board-wrap">
-        <BoardHeader data={data} updateData={updateData} />
+        <BoardHeader />
         <div className="line"></div>
-        {data.length ? (
+        {tasks.length ? (
           <>
-            <TaskList data={data} updateData={updateData} />
-            <BoardFooter data={data} updateData={updateData} />
+            <TaskList />
+            <BoardFooter />
           </>
         ) : null}
       </div>

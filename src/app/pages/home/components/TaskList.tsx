@@ -1,31 +1,25 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Task } from './Task';
 
 import { TaskService } from '../../../shared/services/task-service';
-import { ComponentProps, TaskProps } from '../../../shared/models/task';
+import { TaskProps } from '../../../shared/models/task';
 import { filterLabel } from '../../../shared/data';
+import { TaskState } from '../../../shared/redux/reducer';
 
-export const TaskList = ({ data, updateData }: ComponentProps) => {
+export const TaskList = () => {
+  const tasks = useSelector((state: TaskState) => state.tasks);
   const [filterStatus, setFilterStatus] = useState<string | null>(null);
-  const taskService = new TaskService();
 
-  const filteredData: TaskProps[] = taskService
-    .getTasks(data, filterStatus)
+  const filteredData: TaskProps[] = new TaskService()
+    .getTasks(tasks, filterStatus)
     .sort((a, b) => {
       return b.id - a.id;
     });
 
   const handleFilterChange = (status: string | null) => {
     setFilterStatus(status);
-  };
-
-  const handleDelete = (id: number) => {
-    updateData(taskService.deleteTask(data, id));
-  };
-
-  const handleUpdate = (id: number, updatedTask: TaskProps) => {
-    updateData(taskService.updateTask(data, id, updatedTask));
   };
 
   return (
@@ -49,13 +43,7 @@ export const TaskList = ({ data, updateData }: ComponentProps) => {
       <ul className="task-list">
         {filteredData.map((task) => (
           <li key={task.id} className="task-item">
-            <Task
-              task={task}
-              handleDelete={() => handleDelete(task.id)}
-              handleUpdate={(updatedTask: TaskProps) =>
-                handleUpdate(task.id, updatedTask)
-              }
-            />
+            <Task task={task} />
           </li>
         ))}
       </ul>

@@ -1,13 +1,19 @@
-import { STATUS } from '../../../shared/constants';
-import { ComponentProps } from '../../../shared/models/task';
-import { TaskService } from '../../../shared/services/task-service';
+import { useDispatch, useSelector } from 'react-redux';
 
-export const BoardFooter = ({ data, updateData }: ComponentProps) => {
+import { STATUS } from '../../../shared/constants';
+import { TaskState } from '../../../shared/redux/reducer';
+import { TaskService } from '../../../shared/services/task-service';
+import { clearCompleted } from '../../../shared/redux/action';
+
+export const BoardFooter = () => {
+  const tasks = useSelector((state: TaskState) => state.tasks);
+  const dispatch = useDispatch();
+
   const taskService = new TaskService();
-  const tasksLeft = taskService.getTasks(data, STATUS.Active).length;
+  const tasksLeft = taskService.getTasks(tasks, STATUS.Active).length;
 
   const handleClearCompleted = () => {
-    updateData(taskService.clearCompletedTasks(data));
+    dispatch(clearCompleted());
   };
 
   return (
@@ -15,7 +21,7 @@ export const BoardFooter = ({ data, updateData }: ComponentProps) => {
       <p className="quantity">
         {tasksLeft + ` Task${tasksLeft > 1 ? 's' : ''} Left`}
       </p>
-      {taskService.getTasks(data, STATUS.Completed).length ? (
+      {taskService.getTasks(tasks, STATUS.Completed).length ? (
         <button className="btn btn-outline" onClick={handleClearCompleted}>
           Clear Completed
         </button>
