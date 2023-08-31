@@ -6,9 +6,9 @@ import { Task } from './Task';
 import { TaskService } from '../../../shared/services/task-service';
 import { TaskProps } from '../../../shared/models/task';
 import { filterLabel } from '../../../shared/data/filter-labels';
-import { TaskState } from '../../../../redux/reducer';
+import { TaskState } from '../../../redux/reducer';
 import CheckAll from '../../../../assets/check-all.svg';
-import { selectAll } from '../../../../redux/action';
+import { selectAll } from '../../../redux/action';
 
 export const TaskList = () => {
   const tasks = useSelector((state: TaskState) => state.tasks);
