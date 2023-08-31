@@ -11,16 +11,16 @@ export const TodoHeader = () => {
 
   const handleAddTask = () => {
     const inputValue = inputRef.current?.value;
-    if (inputValue) {
+    if (inputValue?.trim()) {
       const newTask: TaskProps = {
         id: Date.now(),
-        content: inputValue,
+        content: inputValue.trim(),
         status: Status.ACTIVE,
       };
 
       dispatch(addTask(newTask));
-      inputRef.current.value = '';
     }
+    inputRef.current!.value = '';
   };
 
   const handleInputKeyPress = (
@@ -29,16 +29,16 @@ export const TodoHeader = () => {
     event.preventDefault();
     if (event.key === 'Enter') {
       const inputValue = inputRef.current?.value;
-      if (inputValue) {
+      if (inputValue?.trim()) {
         const newTask: TaskProps = {
           id: Date.now(),
-          content: inputValue,
+          content: inputValue.trim(),
           status: Status.ACTIVE,
         };
 
         dispatch(addTask(newTask));
-        inputRef.current.value = '';
       }
+      inputRef.current!.value = '';
     }
   };
 
