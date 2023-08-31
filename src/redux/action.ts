@@ -1,4 +1,4 @@
-import { TaskProps } from '../models/task';
+import { TaskProps } from '../app/shared/models/task';
 import {
   ADD_TASK,
   CLEAR_COMPLETED,

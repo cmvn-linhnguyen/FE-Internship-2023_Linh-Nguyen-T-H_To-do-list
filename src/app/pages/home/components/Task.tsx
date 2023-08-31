@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import deleteIcon from '../../../../assets/delete.svg';
 import { TaskProps } from '../../../shared/models/task';
 import { Status } from '../../../shared/constants';
-import { deleteTask, updateTask } from '../../../shared/redux/action';
+import { deleteTask, updateTask } from '../../../../redux/action';
 
 export const Task = ({ task }: { task: TaskProps }) => {
   const [isEditable, setIsEditable] = useState(false);

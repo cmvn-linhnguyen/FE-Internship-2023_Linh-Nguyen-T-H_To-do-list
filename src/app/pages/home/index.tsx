@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { TodoFooter, TodoHeader, TaskList } from './components';
 
 import '../../../stylesheet/style.scss';
-import { TaskState } from '../../shared/redux/reducer';
+import { TaskState } from '../../../redux/reducer';
 import { useEffect } from 'react';
 import { saveDataToLocalStorage } from '../../shared/utils';
 import { StorageKeys } from '../../shared/constants';

@@ -1,6 +1,6 @@
-import { Status, StorageKeys } from '../constants';
-import { TaskProps } from '../models/task';
-import { getDataFromLocalStorage } from '../utils';
+import { Status, StorageKeys } from '../app/shared/constants';
+import { TaskProps } from '../app/shared/models/task';
+import { getDataFromLocalStorage } from '../app/shared/utils';
 import {
   ADD_TASK,
   CLEAR_COMPLETED,

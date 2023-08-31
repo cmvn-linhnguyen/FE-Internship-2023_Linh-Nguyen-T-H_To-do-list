@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import { TaskProps } from '../../../shared/models/task';
 import { Status } from '../../../shared/constants';
-import { addTask } from '../../../shared/redux/action';
+import { addTask } from '../../../../redux/action';
 
 export const TodoHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);

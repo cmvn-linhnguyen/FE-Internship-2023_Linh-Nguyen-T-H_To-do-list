@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Status } from '../../../shared/constants';
-import { TaskState } from '../../../shared/redux/reducer';
+import { TaskState } from '../../../../redux/reducer';
 import { TaskService } from '../../../shared/services/task-service';
-import { clearCompleted } from '../../../shared/redux/action';
+import { clearCompleted } from '../../../../redux/action';
 
 export const TodoFooter = () => {
   const tasks = useSelector((state: TaskState) => state.tasks);
