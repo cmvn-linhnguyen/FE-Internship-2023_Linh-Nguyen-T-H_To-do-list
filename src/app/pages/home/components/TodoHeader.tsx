@@ -28,7 +28,17 @@ export const TodoHeader = () => {
   ) => {
     event.preventDefault();
     if (event.key === 'Enter') {
-      handleAddTask();
+      const inputValue = inputRef.current?.value;
+      if (inputValue) {
+        const newTask: TaskProps = {
+          id: Date.now(),
+          content: inputValue,
+          status: Status.ACTIVE,
+        };
+
+        dispatch(addTask(newTask));
+        inputRef.current.value = '';
+      }
     }
   };
 
