@@ -17,15 +17,21 @@ export const Task = ({ task }: { task: TaskProps }) => {
 
   const handleChangeContent = () => {
     setIsEditable(false);
-    if (inputRef.current?.value)
-      dispatch(updateTask({ ...task, content: inputRef.current?.value }));
+    if (inputRef.current?.value.trim())
+      dispatch(
+        updateTask({ ...task, content: inputRef.current?.value.trim() })
+      );
   };
 
   const handleInputKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === 'Enter') {
-      handleChangeContent();
+      setIsEditable(false);
+      if (inputRef.current?.value.trim())
+        dispatch(
+          updateTask({ ...task, content: inputRef.current?.value.trim() })
+        );
     }
   };
 

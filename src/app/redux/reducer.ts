@@ -3,7 +3,7 @@ import { TaskProps } from '../shared/models/task';
 import { getDataFromLocalStorage } from '../shared/utils';
 import {
   ADD_TASK,
-  CLEAR_COMPLETED,
+  CLEAR_COMPLETED_TASKS,
   SELECT_ALL,
   DELETE_TASK,
   UPDATE_TASK,
@@ -36,7 +36,7 @@ export const taskReducer = (state = initialState, action: any): TaskState => {
       return { ...state, tasks: [...state.tasks] };
     },
 
-    [CLEAR_COMPLETED]: () => ({
+    [CLEAR_COMPLETED_TASKS]: () => ({
       ...state,
       tasks: state.tasks.filter((task) => task.status !== Status.COMPLETED),
     }),

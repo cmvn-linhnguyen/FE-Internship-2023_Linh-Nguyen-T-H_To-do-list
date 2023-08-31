@@ -1,7 +1,7 @@
 import { TaskProps } from '../shared/models/task';
 import {
   ADD_TASK,
-  CLEAR_COMPLETED,
+  CLEAR_COMPLETED_TASKS,
   SELECT_ALL,
   DELETE_TASK,
   UPDATE_TASK,
@@ -20,7 +20,7 @@ export const updateTask = (updatedTask: TaskProps) => {
 };
 
 export const clearCompleted = () => {
-  return { type: CLEAR_COMPLETED };
+  return { type: CLEAR_COMPLETED_TASKS };
 };
 
 export const selectAll = () => {
