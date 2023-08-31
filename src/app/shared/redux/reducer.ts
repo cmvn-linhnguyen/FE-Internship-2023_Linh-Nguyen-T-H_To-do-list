@@ -1,5 +1,6 @@
-import { Status } from '../constants';
+import { Status, StorageKeys } from '../constants';
 import { TaskProps } from '../models/task';
+import { getDataFromLocalStorage } from '../utils';
 import {
   ADD_TASK,
   CLEAR_COMPLETED,
@@ -13,7 +14,7 @@ export interface TaskState {
 }
 
 const initialState: TaskState = {
-  tasks: [],
+  tasks: getDataFromLocalStorage(StorageKeys.TO_DO_LIST),
 };
 
 export const taskReducer = (state = initialState, action: any): TaskState => {
