@@ -1,37 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 
-import { BoardFooter, BoardHeader, TaskList } from './components';
+import { TodoFooter, TodoHeader, TaskList } from './components';
 
-import { TaskProps } from '../../shared/models/task';
-import {
-  getDataFromLocalStorage,
-  saveDataToLocalStorage,
-} from '../../shared/utils';
 import '../../../stylesheet/style.scss';
-import { LOCAL_STORAGE_KEY } from '../../shared/constants';
+import { TaskState } from '../../redux/reducer';
+import { useEffect } from 'react';
+import { saveDataToLocalStorage } from '../../shared/utils';
+import { StorageKeys } from '../../shared/constants';
 
 const Home = () => {
-  const [data, setData] = useState<TaskProps[]>(
-    getDataFromLocalStorage(LOCAL_STORAGE_KEY.TodoList)
-  );
+  const tasks = useSelector((state: TaskState) => state.tasks);
 
   useEffect(() => {
-    saveDataToLocalStorage(LOCAL_STORAGE_KEY.TodoList, data);
-  }, [data]);
-
-  const updateData = (newData: TaskProps[]): void => {
-    setData(newData);
-  };
+    saveDataToLocalStorage(StorageKeys.TO_DO_LIST, tasks);
+  }, [tasks]);
 
   return (
     <div className="home">
       <div className="board-wrap">
-        <BoardHeader data={data} updateData={updateData} />
+        <TodoHeader />
         <div className="line"></div>
-        {data.length ? (
+        {tasks.length ? (
           <>
-            <TaskList data={data} updateData={updateData} />
-            <BoardFooter data={data} updateData={updateData} />
+            <TaskList />
+            <TodoFooter />
           </>
         ) : null}
       </div>

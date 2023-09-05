@@ -1,17 +1,15 @@
 import { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
+
 import deleteIcon from '../../../../assets/delete.svg';
 import { TaskProps } from '../../../shared/models/task';
-import { STATUS } from '../../../shared/constants';
+import { Status } from '../../../shared/constants';
+import { deleteTask, updateTask } from '../../../redux/action';
 
-interface Props {
-  task: TaskProps;
-  handleDelete: () => void;
-  handleUpdate: (updatedTask: TaskProps) => void;
-}
-
-export const Task = (props: Props) => {
+export const Task = ({ task }: { task: TaskProps }) => {
   const [isEditable, setIsEditable] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const dispatch = useDispatch();
 
   const handleFocus = () => {
     setIsEditable(true);
@@ -19,24 +17,36 @@ export const Task = (props: Props) => {
 
   const handleChangeContent = () => {
     setIsEditable(false);
-    if (inputRef.current?.value)
-      props.handleUpdate({ ...props.task, content: inputRef.current?.value });
+    if (inputRef.current?.value.trim())
+      dispatch(
+        updateTask({ ...task, content: inputRef.current?.value.trim() })
+      );
   };
 
   const handleInputKeyPress = (
     event: React.KeyboardEvent<HTMLInputElement>
   ) => {
     if (event.key === 'Enter') {
-      handleChangeContent();
+      setIsEditable(false);
+      if (inputRef.current?.value.trim())
+        dispatch(
+          updateTask({ ...task, content: inputRef.current?.value.trim() })
+        );
     }
   };
 
   const handleCheckboxChange = () => {
-    props.handleUpdate({
-      ...props.task,
-      status:
-        props.task.status === STATUS.Active ? STATUS.Completed : STATUS.Active,
-    });
+    dispatch(
+      updateTask({
+        ...task,
+        status:
+          task.status === Status.ACTIVE ? Status.COMPLETED : Status.ACTIVE,
+      })
+    );
+  };
+
+  const handleDeleteTask = () => {
+    dispatch(deleteTask(task.id));
   };
 
   return (
@@ -45,7 +55,7 @@ export const Task = (props: Props) => {
         <input
           className="task-checkbox"
           type="checkbox"
-          checked={props.task.status === STATUS.Completed}
+          checked={task.status === Status.COMPLETED}
           onChange={handleCheckboxChange}
         />
         {isEditable ? (
@@ -57,20 +67,20 @@ export const Task = (props: Props) => {
             onBlur={handleChangeContent}
             onKeyDown={handleInputKeyPress}
             ref={inputRef}
-            defaultValue={props.task.content}
+            defaultValue={task.content}
           />
         ) : (
           <span
             className={`task-label ${
-              props.task.status === STATUS.Completed && 'completed'
+              task.status === Status.COMPLETED && 'completed'
             }`}
             onDoubleClick={handleFocus}
           >
-            {props.task.content}
+            {task.content}
           </span>
         )}
       </div>
-      <button className="delete-button" onClick={props.handleDelete}>
+      <button className="delete-button" onClick={handleDeleteTask}>
         <img src={deleteIcon} alt="Delete Icon" />
       </button>
     </div>

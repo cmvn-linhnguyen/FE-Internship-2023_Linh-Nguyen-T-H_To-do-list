@@ -1,12 +1,7 @@
-import { STATUS } from '../constants';
+import { Status } from '../constants';
 
 export interface TaskProps {
   id: number;
   content: string;
-  status: STATUS;
-}
-
-export interface ComponentProps {
-  data: TaskProps[];
-  updateData: (newData: TaskProps[]) => void;
+  status: Status;
 }

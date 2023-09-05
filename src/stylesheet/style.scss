@@ -133,6 +133,16 @@ input[type='checkbox'] {
     gap: 16px;
   }
 
+  &-wrap {
+    justify-content: space-between;
+    align-items: center;
+
+    .check-all-button {
+      background-color: transparent;
+      border: none;
+    }
+  }
+
   cursor: pointer;
 
   &-active {
@@ -147,7 +157,6 @@ input[type='checkbox'] {
   padding: 10px 0px;
   border-bottom: 0.5px solid map-get($colors, 'gray-c');
   &-list {
-    margin-top: 16px;
     max-height: 40vh;
     overflow-y: scroll;
   }
